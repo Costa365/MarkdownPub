@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Markdown Publisher</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://unpkg.com/chota@latest" rel="stylesheet" />
+<link href="{{ url_for('static', path='styles.css') }}" rel="stylesheet" />
+<link id="favicon" rel="icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
+</head>
+<body id="top" class="dark">
+<div class="container">
+
+<div class="div-header">
+<img src="{{ url_for('static', path='md-logo.png') }}" alt="" width="60px" height="50px">
+<label class="title">Markdown Publisher</label>
+</div>
+
+<hr />
+<div class="div-content">
+  <span><a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener noreferrer">Markdown Guide</a></span>
+  <span id="doc-link"></span>
+</div>
+<div>
+<p />
+<textarea id="markdown" name="markdown" rows="15" cols="80" autofocus></textarea>
+</div>
+<button id="post-btn" class="button primary button-custom">Publish</button>
+<script>
+const button = document.getElementById('post-btn');
+let url = ""
+
+function copyUrl() {
+  navigator.clipboard.writeText(url);
+}
+
+button.addEventListener('click', async _ => {
+  try {
+    let link = document.getElementById('doc-link')
+    link.innerHTML = ' | Link to MarkDown document: '
+    document.getElementById("post-btn").disabled = true
+    let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
+    const response = await fetch('http://127.0.0.1:8000/doc', {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'doc':md})
+    })
+    const data = await response.json()
+    console.log('MD ID:', data['doc'])
+    url = window.location.href+'doc/'+data['doc']
+    link.innerHTML = link.innerHTML +
+      '<a href=' + url + ' target="_blank" rel="noopener noreferrer" >' + url + '</a>' + 
+      '<button class="button outline primary button-custom" onclick="copyUrl()">Copy</button>'
+    
+  } catch(err) {
+    console.error(`Error: ${err}`)
+  } finally {
+    document.getElementById("post-btn").disabled = false
+  }
+});
+
+</script>
+<hr />
+</div>
+</body>
