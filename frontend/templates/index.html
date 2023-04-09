@@ -39,7 +39,7 @@ button.addEventListener('click', async _ => {
     link.innerHTML = ' | Link to MarkDown document: '
     document.getElementById("post-btn").disabled = true
     let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
-    const response = await fetch('http://127.0.0.1:8000/doc', {
+    const response = await fetch('doc', {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
@@ -48,7 +48,6 @@ button.addEventListener('click', async _ => {
       body: JSON.stringify({'doc':md})
     })
     const data = await response.json()
-    console.log('MD ID:', data['doc'])
     url = window.location.href+'doc/'+data['doc']
     link.innerHTML = link.innerHTML +
       '<a href=' + url + ' target="_blank" rel="noopener noreferrer" >' + url + '</a>' + 
