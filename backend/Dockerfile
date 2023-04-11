@@ -1,12 +1,12 @@
 FROM python:3.9-alpine
 
-ADD . ./backend
-WORKDIR ./backend
+COPY . /backend
+WORKDIR /backend
 
 COPY ./requirements.txt .
 
-RUN pip install -r requirements.txt
+RUN pip install -r requirements.txt --no-cache-dir
 
 EXPOSE 8000
 
-CMD python main.py
+CMD ["python", "main.py"]
