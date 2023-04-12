@@ -1,8 +1,11 @@
 # Markdown Publisher
 
-Publish MarkDown documents.
+[![GitHub Super-Linter](https://github.com/costa365/MarkdownPub/actions/workflows/lint.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
 
-- Write MarkDown
+
+Publish Markdown documents.
+
+- Write Markdown
 - Publish
   - URL is provided
 - Share URL
@@ -17,14 +20,14 @@ export MONGO_CONNECT="mongodb+srv://name:password@cluster0.mcdesr.mongodb.net/?r
 
 ### API Endpoints
 
-doc - POST (MarkDOwn) - Returns ID to document
+doc - POST (Markdown) - Returns ID to document
 doc - GET (ID)
 
 ```bash
-curl -X POST \
+curl \
   'http://127.0.0.1:8000/doc' \
-  --header 'Content-Type: application/json' \
-  --data-raw '{"doc":"# Test 2\n- Four\n-Five\n-Six"}'
+  -H 'Content-Type: application/json' \
+  -d '{"doc":"# Test 2\n- Test1\n- Test2\n- Test3"}'
 ```
 
 ```bash
@@ -35,8 +38,18 @@ curl 'http://127.0.0.1:8000/doc/6428377ad8a75f3588dd8dc1'
 
 Docker and Docker Compose should be installed.
 
-```
+```bash
 docker compose up
 ```
 
-Access at http://127.0.0.1:8005
+Access at [http://127.0.0.1:8005](http://127.0.0.1:8005)
+
+
+### Linter
+
+We use the GitHub Super-Linter. Run it locally:
+
+```bash
+docker pull github/super-linter:slim-v4
+docker run -e RUN_LOCAL=true -v $PWD:/tmp/lint -w /tmp/lint github/super-linter
+```

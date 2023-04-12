@@ -4,13 +4,13 @@
 <head>
 <title>Markdown Viewer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <link href="https://unpkg.com/chota@latest" rel="stylesheet" />
 <link href="{{ url_for('static', path='styles.css') }}" rel="stylesheet" />
 <link id="favicon" rel="icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
 </head>
-<body id="top" class="dark">  
-<div class="container" id='content'>
+<body id="top" class="dark">
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<div class="container" id="content">
 <script>
   function decodeHtml(html) {
     var txt = document.createElement("textarea");
@@ -19,7 +19,8 @@
   }
   let md = `{{markdown}}`
   console.log(decodeHtml(md))
-  document.getElementById('content').innerHTML = marked.parse(decodeHtml(md));
+  document.getElementById("content").innerHTML = marked.parse(decodeHtml(md));
 </script>
 </div>
 </body>
+</html>
