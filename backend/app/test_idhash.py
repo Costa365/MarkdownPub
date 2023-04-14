@@ -1,5 +1,6 @@
 from app.idhash import IdHash
 
+
 class TestIdHash:
     def setup_method(self):
         self.idHash = IdHash()
