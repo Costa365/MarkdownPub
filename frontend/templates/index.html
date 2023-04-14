@@ -10,22 +10,33 @@
 <body id="top" class="dark">
 <div class="container">
 
-<div class="div-header">
+<div class="header">
 <img src="{{ url_for('static', path='md-logo.png') }}" alt="" width="60px" height="50px">
 <label class="title">Markdown Publisher</label>
 </div>
 
 <hr />
-<div class="div-content">
+<div class="content">
   <span><a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener noreferrer">Markdown Guide</a></span>
   <span id="doc-link"></span>
 </div>
-<div>
-<p />
-<textarea id="markdown" name="markdown" rows="15" cols="80" autofocus></textarea>
+<div class="main">
+  <textarea id="markdown" name="markdown" autofocus></textarea>
 </div>
-<button id="post-btn" class="button primary button-custom">Publish</button>
+<div class="footer">
+  <button id="post-btn" class="button primary button-custom">Publish</button>
+</div>
+
 <script>
+
+function resizeTextArea() {
+  let top =  document.getElementById("doc-link").getBoundingClientRect().bottom
+  let bottom = document.getElementById("post-btn").getBoundingClientRect().top
+  document.getElementById("markdown").style.height = bottom - top - 42 + "px"   
+}
+window.onload = resizeTextArea
+window.onresize = resizeTextArea
+
 const button = document.getElementById("post-btn");
 let url = ""
 
@@ -61,7 +72,7 @@ button.addEventListener('click', async _ => {
 });
 
 </script>
-<hr />
+
 </div>
 </body>
 </html>
