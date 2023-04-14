@@ -1,6 +1,7 @@
 # Markdown Publisher
 
 [![GitHub Super-Linter](https://github.com/costa365/MarkdownPub/actions/workflows/lint.yml/badge.svg)](https://github.com/marketplace/actions/super-linter)
+[![Pytest](https://github.com/costa365/MarkdownPub/actions/workflows/tests.yml/badge.svg)](https://github.com/marketplace/actions/run-pytest)
 
 
 Publish Markdown documents.
