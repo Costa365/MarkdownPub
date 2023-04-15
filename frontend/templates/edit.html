@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Markdown Editor</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://unpkg.com/chota@latest" rel="stylesheet" />
+<link href="{{ url_for('static', path='styles.css') }}" rel="stylesheet" />
+<link id="favicon" rel="icon" type="image/x-icon" href="{{ url_for('static', path='favicon.ico') }}">
+</head>
+<body id="top" class="dark">
+<div class="container">
+
+<div class="header">
+<img src="{{ url_for('static', path='md-logo.png') }}" alt="" width="60px" height="50px">
+<label class="title">Markdown Publisher</label>
+</div>
+
+<hr />
+<div class="content">
+  <span><a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener noreferrer">Markdown Guide</a></span>
+  <span id="doc-link"></span>
+</div>
+<div class="main">
+  <textarea id="markdown" name="markdown" autofocus></textarea>
+</div>
+<div class="footer">
+  <button id="post-btn" class="button primary button-custom">Update</button>
+</div>
+
+<script>
+
+function resizeTextArea() {
+  let top =  document.getElementById("doc-link").getBoundingClientRect().bottom
+  let bottom = document.getElementById("post-btn").getBoundingClientRect().top
+  document.getElementById("markdown").style.height = bottom - top - 42 + "px"   
+}
+window.onload = resizeTextArea
+window.onresize = resizeTextArea
+
+const button = document.getElementById("post-btn");
+
+document.getElementById("markdown").innerHTML = `{{markdown}}`
+
+button.addEventListener('click', async _ => {
+  try {
+    let link = document.getElementById('doc-link')
+    link.innerHTML = ' | Link to MarkDown document: '
+    document.getElementById("post-btn").disabled = true
+    let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
+    let id = uwindow.location.hrefrl.split("/").pop()
+    console.log("BBBBB", id)
+    const response = await fetch('doc', {
+      method: 'PUT',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({'doc':md, 'editId':id})
+    })
+    const data = await response.json()
+    console.log(data)
+    
+  } catch(err) {
+    console.error(`Error: ${err}`)
+  } finally {
+    document.getElementById("post-btn").disabled = false
+  }
+});
+
+</script>
+
+</div>
+</body>
+</html>
