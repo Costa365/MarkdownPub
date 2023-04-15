@@ -48,8 +48,8 @@ function copyUrl() {
 
 button.addEventListener('click', async _ => {
   try {
-    let link = document.getElementById('doc-link')
-    link.innerHTML = ' | Link to MarkDown document: '
+    let status = document.getElementById('doc-link')
+    status.innerHTML = ' | Link to MarkDown document: '
     document.getElementById("post-btn").disabled = true
     let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
     const response = await fetch("{{backend}}"+"/doc", {
@@ -61,12 +61,11 @@ button.addEventListener('click', async _ => {
       body: JSON.stringify({'doc':md})
     })
     const data = await response.json()
-    url = window.location.href+'doc/'+data['doc']
-    console.log("EditID = ", data['editId'])
-    link.innerHTML = link.innerHTML +
-      '<a href=' + url + ' target="_blank" rel="noopener noreferrer" >' + url + '</a>' + 
-      '<button class="button outline primary button-custom" onclick="copyUrl()">Copy</button>'
-    
+    urlView = window.location.href+'doc/'+data['doc']
+    urlEdit = window.location.href+'edit/'+data['doc']+"/"+data['editId']
+    status.innerHTML = status.innerHTML +
+      '<a href=' + urlView + ' target="_blank" rel="noopener noreferrer" >View Link</a> | ' +
+      '<a href=' + urlEdit + ' target="_blank" rel="noopener noreferrer" >Edit Link</a>'
   } catch(err) {
     console.error(`Error: ${err}`)
   } finally {

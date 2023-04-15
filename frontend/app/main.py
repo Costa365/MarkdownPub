@@ -1,5 +1,5 @@
 import requests
-from fastapi import FastAPI, Request
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
@@ -19,14 +19,26 @@ async def root(request: Request):
 @app.get("/doc/{id}", response_class=HTMLResponse)
 async def get_doc(request: Request, id: str):
     r = requests.get(url="http://backend:8000/doc/" + id)
-    j = r.json()
-    m = j["doc"]
-    return templates.TemplateResponse("doc.html", {"request": request, "markdown": m})
+    if r.status_code == 200:
+        j = r.json()
+        m = j["doc"]
+        return templates.TemplateResponse(
+            "doc.html", {"request": request, "markdown": m}
+        )
+    else:
+        raise HTTPException(status_code=404, detail=f"Document {id} not found")
 
 
 @app.get("/edit/{id}/{eid}", response_class=HTMLResponse)
 async def edit_doc(request: Request, id: str):
     r = requests.get(url="http://backend:8000/doc/" + id)
-    j = r.json()
-    m = j["doc"]
-    return templates.TemplateResponse("edit.html", {"request": request, "markdown": m})
+    if r.status_code == 200:
+        j = r.json()
+        m = j["doc"]
+        return templates.TemplateResponse(
+            "edit.html",
+            {"request": request, "markdown": m, "backend": "http://127.0.0.1:8000"},
+        )
+
+    else:
+        raise HTTPException(status_code=404, detail=f"Document {id} not found")

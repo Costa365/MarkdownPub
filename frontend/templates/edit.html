@@ -43,26 +43,26 @@ document.getElementById("markdown").innerHTML = `{{markdown}}`
 
 button.addEventListener('click', async _ => {
   try {
-    let link = document.getElementById('doc-link')
-    link.innerHTML = ' | Updating...'
+    let status = document.getElementById('doc-link')
+    status.innerHTML = ' | Updating...'
     document.getElementById("post-btn").disabled = true
     let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
-    let id = window.location.href.split("/").pop()
+    let eid = window.location.href.split("/").pop()
     const response = await fetch("{{backend}}"+"/doc", {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({'doc':md, 'editId':id})
+      body: JSON.stringify({'doc':md, 'editId':eid})
     })
     const data = await response.json()
-    console.log(data);
-    if (response.status == 200)
-      link.innerHTML = ' | Updated!'
-    else
-      link.innerHTML = ' | Unable to update - check link'
-    
+    if (response.status == 200) {
+      status.innerHTML = ' | Successfully Updated!'
+    }
+    else {
+      status.innerHTML = ' | Unable to update - check link'
+    }
   } catch(err) {
     console.error(`Error: ${err}`)
   } finally {
