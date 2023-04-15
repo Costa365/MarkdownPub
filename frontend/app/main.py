@@ -1,4 +1,3 @@
-import app.schemas as schemas
 import requests
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
@@ -12,7 +11,9 @@ templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse(
+        "index.html", {"request": request, "backend": "http://127.0.0.1:8000"}
+    )
 
 
 @app.get("/doc/{id}", response_class=HTMLResponse)
@@ -29,11 +30,3 @@ async def edit_doc(request: Request, id: str):
     j = r.json()
     m = j["doc"]
     return templates.TemplateResponse("edit.html", {"request": request, "markdown": m})
-
-
-@app.post("/doc")
-async def create_doc(md: schemas.MarkDown):
-    body = {"doc": md.doc}
-    resp = requests.post(url="http://backend:8000/doc/", json=body)
-    js = resp.json()
-    return {"doc": str(js["doc"]), "editId": str(js["editId"])}

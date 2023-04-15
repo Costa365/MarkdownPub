@@ -38,6 +38,8 @@ window.onload = resizeTextArea
 window.onresize = resizeTextArea
 
 const button = document.getElementById("post-btn");
+const backendUrl = `{{backend}}`
+console.log(backendUrl)
 let url = ""
 
 function copyUrl() {
@@ -50,7 +52,7 @@ button.addEventListener('click', async _ => {
     link.innerHTML = ' | Link to MarkDown document: '
     document.getElementById("post-btn").disabled = true
     let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
-    const response = await fetch('doc', {
+    const response = await fetch("{{backend}}"+"/doc", {
       method: 'POST',
       headers: {
         'Accept': 'application/json',
