@@ -21,9 +21,9 @@ export MONGO_CONNECT="mongodb+srv://name:password@cluster0.mcdesr.mongodb.net/?r
 
 ### API Endpoints
 
-doc - POST (Markdown) - Returns ID to document
-doc - GET (ID)
-doc - PUT (MarkdownUpdate)
+- doc - POST (Markdown) - Returns ID to document
+- doc - GET (ID)
+- doc - PUT (MarkdownUpdate)
 
 ```bash
 curl \
