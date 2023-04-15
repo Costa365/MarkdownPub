@@ -28,4 +28,4 @@ async def create_doc(md: schemas.MarkDown):
     body = {"doc": md.doc}
     resp = requests.post(url="http://backend:8000/doc/", json=body)
     js = resp.json()
-    return {"doc": str(js["doc"])}
+    return {"doc": str(js["doc"]), "edit": str(js["edit"])}

@@ -28,6 +28,12 @@ class Data:
         # TODO: handle case id already exists
         idHash = IdHash()
         id = idHash.hash()
-        d = {"_id": id, "Time": datetime.now(timezone.utc), "Doc": doc.doc}
+        editId = idHash.hash()
+        d = {
+            "_id": id,
+            "Time": datetime.now(timezone.utc),
+            "Doc": doc.doc,
+            "EditId": editId,
+        }
         res = self.col.insert_one(d)
-        return res.inserted_id
+        return [res.inserted_id, editId]
