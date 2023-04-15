@@ -1,6 +1,6 @@
 import app.schemas as schemas
 from app.data import Data
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
@@ -25,7 +25,10 @@ async def root():
 @app.get("/doc/{doc_id}")
 async def read_doc(doc_id):
     result = data.getDoc(doc_id)
-    return {"doc": result["Doc"]}
+    if result is not None:
+        return {"doc": result["Doc"]}
+    else:
+        raise HTTPException(status_code=404, detail=f"Document {doc_id} not found")
 
 
 @app.post("/doc")
@@ -36,5 +39,8 @@ async def create_doc(md: schemas.MarkDown):
 
 @app.put("/doc")
 async def update_doc(emd: schemas.MarkDownUpdate):
-    data.updateDoc(emd)
-    return {"status": "success"}
+    result = data.updateDoc(emd)
+    if result:
+        return {"status": "success"}
+    else:
+        raise HTTPException(status_code=404, detail="Item not found")

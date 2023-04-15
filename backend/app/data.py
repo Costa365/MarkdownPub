@@ -3,7 +3,6 @@ from datetime import datetime, timezone
 
 import pymongo
 from app.idhash import IdHash
-from fastapi import HTTPException
 
 
 class Data:
@@ -19,10 +18,7 @@ class Data:
 
     def getDoc(self, doc_id):
         res = self.col.find_one({"_id": doc_id}, {"_id": 0})
-        print(res)
-        if res is not None:
-            return res
-        raise HTTPException(status_code=404, detail=f"Document {doc_id} not found")
+        return res
 
     def createDoc(self, doc):
         # TODO: handle case id already exists
@@ -46,5 +42,5 @@ class Data:
 
         query = {"EditId": doc.editId}
         newvalues = {"$set": d}
-        self.col.update_one(query, newvalues)
-        return True
+        res = self.col.update_one(query, newvalues)
+        return res.modified_count > 0
