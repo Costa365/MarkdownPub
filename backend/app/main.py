@@ -31,4 +31,10 @@ async def read_doc(doc_id):
 @app.post("/doc")
 async def create_doc(md: schemas.MarkDown):
     [id, eid] = data.createDoc(md)
-    return {"doc": str(id), "edit": str(eid)}
+    return {"doc": str(id), "editId": str(eid)}
+
+
+@app.put("/doc")
+async def update_doc(emd: schemas.MarkDownUpdate):
+    data.updateDoc(emd)
+    return {"status": "success"}

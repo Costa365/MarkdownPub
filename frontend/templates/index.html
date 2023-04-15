@@ -60,7 +60,7 @@ button.addEventListener('click', async _ => {
     })
     const data = await response.json()
     url = window.location.href+'doc/'+data['doc']
-    console.log("EditID = ", data['edit'])
+    console.log("EditID = ", data['editId'])
     link.innerHTML = link.innerHTML +
       '<a href=' + url + ' target="_blank" rel="noopener noreferrer" >' + url + '</a>' + 
       '<button class="button outline primary button-custom" onclick="copyUrl()">Copy</button>'

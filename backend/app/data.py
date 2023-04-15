@@ -37,3 +37,14 @@ class Data:
         }
         res = self.col.insert_one(d)
         return [res.inserted_id, editId]
+
+    def updateDoc(self, doc):
+        d = {
+            "Time": datetime.now(timezone.utc),
+            "Doc": doc.doc,
+        }
+
+        query = {"EditId": doc.editId}
+        newvalues = {"$set": d}
+        self.col.update_one(query, newvalues)
+        return True

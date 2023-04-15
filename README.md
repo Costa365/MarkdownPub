@@ -32,7 +32,14 @@ curl \
 ```
 
 ```bash
-curl 'http://127.0.0.1:8000/doc/6428377ad8a75f3588dd8dc1'
+curl 'http://127.0.0.1:8000/doc/MzM5NjEwYzk1'
+```
+
+```bash
+curl \
+  -X PUT 'http://127.0.0.1:8000/doc' \
+  -H 'Content-Type: application/json' \
+  -d '{"doc":"# Test 3\n- Test1a\n- Test2a\n- Test3a", "editId":"MzM5NjEwYzk1"}'
 ```
 
 ### Run application
