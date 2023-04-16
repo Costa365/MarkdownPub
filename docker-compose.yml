@@ -14,5 +14,7 @@ services:
         - "8005:8005"
     volumes:
       - ./frontend:/frontend
+    environment:
+      - BACKEND=http://127.0.0.1:8000
     depends_on:
       - backend

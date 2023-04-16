@@ -8,6 +8,8 @@ services:
       - ./backend:/backend
     environment:
       - MONGO_CONNECT=mongodb://mongodb:27017
+      - VIRTUAL_HOST=mdpubapi.costa365.site
+      - PORT: 8005
     depends_on:
       - mongodb
     networks:
@@ -19,8 +21,9 @@ services:
     volumes:
       - ./frontend:/frontend
     environment:
-      VIRTUAL_HOST: mdpub.costa365.site
-      PORT: 8005
+      - VIRTUAL_HOST=mdpub.costa365.site
+      - PORT=8005
+      - BACKEND=http://127.0.0.1:8000
     depends_on:
       - backend
     networks:

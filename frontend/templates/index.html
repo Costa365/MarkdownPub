@@ -39,12 +39,6 @@ window.onresize = resizeTextArea
 
 const button = document.getElementById("post-btn");
 const backendUrl = `{{backend}}`
-console.log(backendUrl)
-let url = ""
-
-function copyUrl() {
-  navigator.clipboard.writeText(url);
-}
 
 button.addEventListener('click', async _ => {
   try {

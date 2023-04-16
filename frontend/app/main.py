@@ -1,3 +1,5 @@
+import os
+
 import requests
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.responses import HTMLResponse
@@ -7,12 +9,13 @@ from fastapi.templating import Jinja2Templates
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 templates = Jinja2Templates(directory="templates")
+backendUrl = USER = os.getenv("BACKEND")
 
 
 @app.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     return templates.TemplateResponse(
-        "index.html", {"request": request, "backend": "http://127.0.0.1:8000"}
+        "index.html", {"request": request, "backend": backendUrl}
     )
 
 
@@ -37,7 +40,7 @@ async def edit_doc(request: Request, id: str):
         m = j["doc"]
         return templates.TemplateResponse(
             "edit.html",
-            {"request": request, "markdown": m, "backend": "http://127.0.0.1:8000"},
+            {"request": request, "markdown": m, "backend": backendUrl},
         )
 
     else:
