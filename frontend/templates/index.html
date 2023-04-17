@@ -18,7 +18,7 @@
 <hr />
 <div class="content">
   <span><a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener noreferrer">Markdown Guide</a></span>
-  <span id="doc-link"></span>
+  <span id="status"></span>
 </div>
 <div class="main">
   <textarea id="markdown" name="markdown" autofocus></textarea>
@@ -30,20 +30,28 @@
 <script>
 
 function resizeTextArea() {
-  let top =  document.getElementById("doc-link").getBoundingClientRect().bottom
+  let top =  document.getElementById("status").getBoundingClientRect().bottom
   let bottom = document.getElementById("post-btn").getBoundingClientRect().top
   document.getElementById("markdown").style.height = bottom - top - 42 + "px"   
 }
 window.onload = resizeTextArea
 window.onresize = resizeTextArea
 
-const button = document.getElementById("post-btn");
+function showLinks(data,status) {
+  urlView = window.location.href+'doc/'+data['doc']
+  urlEdit = window.location.href+'edit/'+data['doc']+"/"+data['editId']
+  status.innerHTML = status.innerHTML +
+    '<a href=' + urlView + ' target="_blank" rel="noopener noreferrer" >View</a> | ' +
+    '<a href=' + urlEdit + ' target="_blank" rel="noopener noreferrer" >Edit</a>'
+}
+
 const backendUrl = `{{backend}}`
+const button = document.getElementById("post-btn");
 
 button.addEventListener('click', async _ => {
   try {
-    let status = document.getElementById('doc-link')
-    status.innerHTML = ' | Link to MarkDown document: '
+    let status = document.getElementById('status')
+    status.innerHTML = ' | Links to MarkDown document: '
     document.getElementById("post-btn").disabled = true
     let md = document.getElementById("markdown").value.replace(/`/g,"\\`")
     const response = await fetch("{{backend}}"+"/doc", {
@@ -55,11 +63,7 @@ button.addEventListener('click', async _ => {
       body: JSON.stringify({'doc':md})
     })
     const data = await response.json()
-    urlView = window.location.href+'doc/'+data['doc']
-    urlEdit = window.location.href+'edit/'+data['doc']+"/"+data['editId']
-    status.innerHTML = status.innerHTML +
-      '<a href=' + urlView + ' target="_blank" rel="noopener noreferrer" >View Link</a> | ' +
-      '<a href=' + urlEdit + ' target="_blank" rel="noopener noreferrer" >Edit Link</a>'
+    showLinks(data,status)
   } catch(err) {
     console.error(`Error: ${err}`)
   } finally {
