@@ -7,12 +7,13 @@ services:
     volumes:
       - ./backend:/backend
     environment:
-      - MONGO_CONNECT=mongodb://mongodb:27017
       - VIRTUAL_HOST=mdpubapi.costa365.site
       - PORT=8005
+      - MONGO_CONNECT=mongodb://mongodb:27017
     depends_on:
       - mongodb
     networks:
+      - nginx-proxy
       - app-net
   frontend:
     build: ./frontend
