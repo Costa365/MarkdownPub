@@ -18,7 +18,7 @@
 <hr />
 <div class="content">
   <span><a href="https://www.markdownguide.org/basic-syntax/" target="_blank" rel="noopener noreferrer">Markdown Guide</a></span>
-  <span id="viewLink"></span>
+  <span id="view-link"></span>
   <span id="status"></span>
 </div>
 <div class="main">
@@ -38,7 +38,7 @@ function resizeTextArea() {
 window.onload = resizeTextArea
 window.onresize = resizeTextArea
 
-function viewLink() {
+function view-link() {
   let url = window.location.href
 
   const path = url.split('/')
@@ -47,8 +47,8 @@ function viewLink() {
   return url.replace("/edit/", "/doc/").replace("/"+eid, "")
 }
 
-const viewLinkElement = document.getElementById("viewLink");
-viewLinkElement.innerHTML = ' | <a href=' + viewLink() + ' target="_blank" rel="noopener noreferrer" >View</a>'
+const view-linkElement = document.getElementById("view-link");
+view-linkElement.innerHTML = ' | <a href=' + view-link() + ' target="_blank" rel="noopener noreferrer" >View</a>'
 
 const button = document.getElementById("post-btn");
 
