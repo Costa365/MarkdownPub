@@ -38,7 +38,7 @@ function resizeTextArea() {
 window.onload = resizeTextArea
 window.onresize = resizeTextArea
 
-function view-link() {
+function viewLink() {
   let url = window.location.href
 
   const path = url.split('/')
@@ -47,8 +47,8 @@ function view-link() {
   return url.replace("/edit/", "/doc/").replace("/"+eid, "")
 }
 
-const view-linkElement = document.getElementById("view-link");
-view-linkElement.innerHTML = ' | <a href=' + view-link() + ' target="_blank" rel="noopener noreferrer" >View</a>'
+const viewLinkElement = document.getElementById("view-link");
+viewLinkElement.innerHTML = ' | <a href=' + viewLink() + ' target="_blank" rel="noopener noreferrer" >View</a>'
 
 const button = document.getElementById("post-btn");
 
