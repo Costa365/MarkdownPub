@@ -12,6 +12,7 @@ services:
       - MONGO_CONNECT=mongodb://mongodb:27017
     depends_on:
       - mongodb
+    restart: always
     networks:
       - nginx-proxy
       - app-net
@@ -27,6 +28,7 @@ services:
       - BACKEND=https://mdpubapi.costa365.site
     depends_on:
       - backend
+    restart: always
     networks:
       - nginx-proxy
       - app-net
@@ -36,6 +38,7 @@ services:
       - ./data:/data/db
     ports:
      - "27017:27017"
+    restart: always
     networks:
       - app-net
 networks:
